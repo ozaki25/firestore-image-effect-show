@@ -8,13 +8,14 @@ function getRandom(list) {
 }
 
 function App() {
-  const [oldSlide, setOldSlide] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(null);
+  const [slide, setSlide] = useState({ old: null, current: null });
 
   const onReceive = ({ url, caption, comment }) => {
-    console.log({ url, caption, comment });
-    setOldSlide(currentSlide);
-    setCurrentSlide({ url, effect: getRandom(effects) });
+    console.log({ url, caption, comment, slide });
+    setSlide({
+      old: slide.current,
+      current: { url, effect: getRandom(effects) },
+    });
   };
 
   useEffect(() => {
@@ -22,12 +23,12 @@ function App() {
     firestore.subscribe({ ref: firestore.dbImagesRef, onReceive });
   }, []);
 
-  console.log({ oldSlide, currentSlide });
+  console.log({ slide });
   return (
     <div>
-      {oldSlide && <Image key={performance.now()} {...oldSlide} type="out" />}
-      {currentSlide && (
-        <Image key={performance.now()} {...currentSlide} type="in" />
+      {slide.old && <Image key={performance.now()} {...slide.old} type="out" />}
+      {slide.current && (
+        <Image key={performance.now()} {...slide.current} type="in" />
       )}
     </div>
   );
