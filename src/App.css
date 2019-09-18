@@ -1,33 +1,41 @@
-.App {
-  text-align: center;
+.slide {
+  position: absolute;
+  top: calc(50vh - 150px);
+  left: calc(50vw - 300px);
+  right: 0;
+  bottom: 0;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.slide-in-right {
+  animation-name: slideInRight;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: both;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.slide-in-left {
+  animation-name: slideInLeft;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: both;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@keyframes slideInRight {
+  0% {
+    transform: translate(600px, 300px) rotate(60deg);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: translate(0, 0) rotate(-10deg);
+    transform-origin: 30% 50%;
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translate(-600px, 300px) rotate(-60deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(10deg);
+    transform-origin: 30% 50%;
   }
 }
