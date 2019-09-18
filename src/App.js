@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import images from './constants/images';
 import effects from './constants/effects';
 import Image from './components/Image';
 import Firestore from './utils/firestore';
