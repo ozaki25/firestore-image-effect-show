@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div onClick={onClick}>
-      <Image key={Date.now()} {...slide} />
+      {slide && <Image key={Date.now()} {...slide} />}
     </div>
   );
 }
