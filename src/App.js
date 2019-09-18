@@ -1,41 +1,29 @@
-import React, { useState } from 'react';
-import ImageEffect from 'react-image-effects';
+import React, { useEffect, useState } from 'react';
 import images from './constants/images';
 import effects from './constants/effects';
-import './App.css';
+import Image from './components/Image';
 
 function getRandom(list) {
   return list[Date.now() % list.length];
 }
 
-function Image({ url, effect, index }) {
-  console.log({ url, effect, index });
-  const className = index % 2 ? 'slide-in-right' : 'slide-in-left';
-  return (
-    <div className="slide">
-      <div className={className}>
-        <ImageEffect url={url} effect={effect} />
-      </div>
-    </div>
-  );
-}
-
 function App() {
-  const [slides, setSlides] = useState([]);
+  const [slide, setSlide] = useState(null);
+
   const onClick = () => {
-    const slide = {
+    setSlide({
       url: getRandom(images),
       effect: getRandom(effects),
-    };
-    setSlides([...slides, slide]);
+    });
   };
+
+  useEffect(() => {
+    onClick();
+  }, []);
+
   return (
-    <div>
-      <h1>Hello</h1>
-      <button onClick={onClick}>追加</button>
-      {slides.map((slide, i) => (
-        <Image key={i} {...slide} index={i} />
-      ))}
+    <div onClick={onClick}>
+      <Image key={Date.now()} {...slide} />
     </div>
   );
 }
