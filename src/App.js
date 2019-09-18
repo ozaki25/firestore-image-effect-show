@@ -8,10 +8,12 @@ function getRandom(list) {
 }
 
 function App() {
-  const [slide, setSlide] = useState(null);
+  const [oldSlide, setOldSlide] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(null);
 
   const onClick = () => {
-    setSlide({
+    setOldSlide(currentSlide);
+    setCurrentSlide({
       url: getRandom(images),
       effect: getRandom(effects),
     });
@@ -21,9 +23,13 @@ function App() {
     onClick();
   }, []);
 
+  console.log({ oldSlide, currentSlide });
   return (
     <div onClick={onClick}>
-      {slide && <Image key={Date.now()} {...slide} />}
+      {oldSlide && <Image key={performance.now()} {...oldSlide} type="out" />}
+      {currentSlide && (
+        <Image key={performance.now()} {...currentSlide} type="in" />
+      )}
     </div>
   );
 }
