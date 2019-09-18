@@ -22,10 +22,10 @@ class Firestore {
       .limit(1);
   }
 
-  subscribe({ ref, onRecive }) {
+  subscribe({ ref, onReceive }) {
     ref.onSnapshot(snapshot => {
       // 1件目だけ返す
-      snapshot.docs.forEach(doc => onRecive(doc.data()));
+      snapshot.docs.forEach(doc => onReceive(doc.data()));
     });
   }
 }
