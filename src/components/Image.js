@@ -1,6 +1,6 @@
 import React from 'react';
-import ImageEffect from 'react-image-effects';
 import styled, { keyframes } from 'styled-components';
+import ImageEffect from '../libs/react-image-effects';
 
 const fadeIn = keyframes`
   0% {
@@ -30,10 +30,19 @@ const Container = styled.div`
   position: absolute;
 `;
 
-function Image({ url, effect, type }) {
+const Caption = styled.p`
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+`;
+
+function Image({ url, effect, caption, type }) {
   return (
     <Container type={type}>
-      <ImageEffect url={url} effect={effect} width="540px" height="720px" />
+      <ImageEffect url={url} effect={effect} width="540px" height="720px">
+        {caption && <Caption>{caption}</Caption>}
+      </ImageEffect>
     </Container>
   );
 }
