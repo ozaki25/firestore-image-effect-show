@@ -22,8 +22,8 @@ class Firestore {
       .limit(1);
   }
 
-  subscribe({ ref, onReceive }) {
-    ref.onSnapshot(snapshot => {
+  subscribeImages({ onReceive }) {
+    this.dbImagesRef.onSnapshot(snapshot => {
       // 1件目だけ返す
       snapshot.docs.forEach(doc => onReceive(doc.data()));
     });
