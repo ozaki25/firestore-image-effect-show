@@ -27,14 +27,10 @@ const Container = styled.div`
   animation-delay: 1s;
   animation-fill-mode: both;
   animation-timing-function: ease-in;
-  position: absolute;
 `;
 
 const Caption = styled.p`
   color: white;
-  position: absolute;
-  bottom: 0;
-  left: 5px;
 `;
 
 function Image({ url, effect, caption, type }) {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import effects from './constants/effects';
 import Image from './components/Image';
+import Container from './components/Container';
 import Firestore from './utils/firestore';
 
 function getRandom(list) {
@@ -38,12 +39,12 @@ function App() {
 
   console.log({ slide });
   return (
-    <div>
+    <Container>
       {slide.old && <Image key={slide.old.key} {...slide.old} type="out" />}
       {slide.current && (
         <Image key={slide.current.key} {...slide.current} type="in" />
       )}
-    </div>
+    </Container>
   );
 }
 
