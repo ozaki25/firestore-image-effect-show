@@ -28,6 +28,12 @@ const Container = styled.div`
   animation-delay: 1s;
   animation-fill-mode: both;
   animation-timing-function: ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin: 35px;
 `;
 
 const Caption = styled.p`
@@ -37,10 +43,15 @@ const Caption = styled.p`
   z-index: 1;
 `;
 
-function Image({ url, effect, caption, type }) {
+function Image({ url, effect, caption, type, size }) {
   return (
     <Container type={type}>
-      <ImageEffect url={url} effect={effect} width="540px" height="720px">
+      <ImageEffect
+        url={url}
+        effect={effect}
+        height={`calc(100vmin * ${size.height})`}
+        width={`calc(100vmin * ${size.width})`}
+      >
         {caption && <Caption color={captionColor[effect]}>{caption}</Caption>}
       </ImageEffect>
     </Container>

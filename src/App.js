@@ -3,6 +3,7 @@ import effects from './constants/effects';
 import Image from './components/Image';
 import Container from './components/Container';
 import Firestore from './utils/firestore';
+import loadImage, { ratio } from './utils/loadImage';
 
 function getRandom(list) {
   return list[Date.now() % list.length];
@@ -12,12 +13,23 @@ function App() {
   const [slide, setSlide] = useState({ old: null, current: null });
   const [tmpSlide, setTmpSlide] = useState(null);
 
-  const onReceive = ({ url, caption, comment }) => {
-    console.log({ url, caption, comment, slide });
+  const onReceive = async ({ url, caption, comment }) => {
+    const { naturalHeight, naturalWidth } = await loadImage({ url });
+    const size = ratio({ height: naturalHeight, width: naturalWidth });
+    console.log({
+      url,
+      caption,
+      comment,
+      slide,
+      naturalHeight,
+      naturalWidth,
+      size,
+    });
     setTmpSlide({
       url,
       caption,
       comment,
+      size,
       effect: getRandom(effects),
       key: performance.now(),
     });
