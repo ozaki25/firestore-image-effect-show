@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import ImageEffect from '../libs/react-image-effects';
+import { captionColor } from '../constants/effects';
 
 const fadeIn = keyframes`
   0% {
@@ -30,14 +31,17 @@ const Container = styled.div`
 `;
 
 const Caption = styled.p`
-  color: white;
+  color: ${({ color }) => color};
+  font-size: 1.2em;
+  margin: 0 15px;
+  z-index: 1;
 `;
 
 function Image({ url, effect, caption, type }) {
   return (
     <Container type={type}>
       <ImageEffect url={url} effect={effect} width="540px" height="720px">
-        {caption && <Caption>{caption}</Caption>}
+        {caption && <Caption color={captionColor[effect]}>{caption}</Caption>}
       </ImageEffect>
     </Container>
   );
