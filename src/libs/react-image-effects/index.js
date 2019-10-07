@@ -292,7 +292,7 @@ function _templateObject() {
     '\n    width: ',
     ';\n    height: ',
     ';\n    background-image: ',
-    ';\n    background-size: cover;\n    background-position: center;\n  ',
+    ';\n    background-size: cover;\n    background-position: center;\n    display: flex;\n    align-items: flex-end;\n  ',
   ]);
 
   _templateObject = function _templateObject() {
