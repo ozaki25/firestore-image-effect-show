@@ -9,8 +9,8 @@ const StyledContainer = styled.div`
   width: 100%;
 `;
 
-function Container({ children }) {
-  return <StyledContainer>{children}</StyledContainer>;
+function Container({ children, ...props }) {
+  return <StyledContainer {...props}>{children}</StyledContainer>;
 }
 
 export default Container;
