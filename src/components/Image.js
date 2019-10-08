@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 
 const Caption = styled.p`
   color: ${({ color }) => color};
-  font-size: 32px;
+  font-size: 28px;
   margin: 0 15px;
   z-index: 1;
 `;
