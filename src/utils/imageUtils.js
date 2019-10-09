@@ -1,4 +1,6 @@
-function loadImage({ url }) {
+import effects from '../constants/effects';
+
+export function loadImage({ url }) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
@@ -13,4 +15,6 @@ export function ratio({ height, width }) {
     : { height: 1, width: width / height };
 }
 
-export default loadImage;
+export function getEffect() {
+  return effects[Date.now() % effects.length];
+}

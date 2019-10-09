@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import effects from './constants/effects';
 import Image from './components/Image';
 import Container from './components/Container';
 import Firestore from './utils/firestore';
-import loadImage, { ratio } from './utils/loadImage';
+import { loadImage, ratio, getEffect } from './utils/imageUtils';
+
+const firestore = new Firestore();
 
 const LinkButton = styled.a`
   position: absolute;
@@ -15,10 +16,6 @@ const FullScreen = styled.div`
   height: 100%;
   width: 100%;
 `;
-
-function getRandom(list) {
-  return list[Date.now() % list.length];
-}
 
 function App() {
   const [slide, setSlide] = useState({ old: null, current: null });
@@ -42,19 +39,25 @@ function App() {
       caption,
       comment,
       size,
-      effect: getRandom(effects),
+      effect: getEffect(),
       key: performance.now(),
     });
   };
 
+  const getImageInteral = () => {
+    setInterval(() => {
+      const image = firestore.getImage();
+      if (image) onReceive(image);
+    }, 10000);
+  };
+
   const onClickFullScreen = () => {
-    console.log(fullScreenRef.current);
     fullScreenRef.current.requestFullscreen();
   };
 
   useEffect(() => {
-    const firestore = new Firestore();
-    firestore.subscribeImages({ onReceive });
+    firestore.subscribeImages();
+    getImageInteral();
   }, []);
 
   useEffect(() => {
@@ -66,7 +69,6 @@ function App() {
     }
   }, [tmpSlide]);
 
-  console.log({ slide });
   return (
     <>
       <LinkButton href="#" onClick={onClickFullScreen}>
