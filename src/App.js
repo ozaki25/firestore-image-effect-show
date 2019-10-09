@@ -21,13 +21,12 @@ function App() {
   const [active, setActive] = useState(null);
   const fullScreenRef = useRef(null);
 
-  const onReceive = async ({ url, caption, comment }) => {
+  const onReceive = async ({ url, caption }) => {
     const { naturalHeight, naturalWidth } = await loadImage({ url });
     const size = ratio({ height: naturalHeight, width: naturalWidth });
     setSlide({
       url,
       caption,
-      comment,
       size,
       effect: getEffect(),
       key: performance.now(),
