@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'; //必須
 import 'firebase/firestore'; //必要なモジュールごとにimport
 
+const SAVED_NUMBER = 10;
+
 class Firestore {
   constructor() {
     this.images = [];
@@ -22,7 +24,7 @@ class Firestore {
       .firestore()
       .collection('images')
       .orderBy('timestamp', 'desc')
-      .limit(10);
+      .limit(SAVED_NUMBER);
   }
 
   subscribeImages() {

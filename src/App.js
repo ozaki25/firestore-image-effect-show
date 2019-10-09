@@ -7,6 +7,8 @@ import { loadImage, ratio, getEffect } from './utils/imageUtils';
 
 const firestore = new Firestore();
 
+const DISPLAY_TIME = 10000; // ms
+
 const LinkButton = styled.a`
   position: absolute;
   top: 0;
@@ -44,11 +46,11 @@ function App() {
     });
   };
 
-  const getImageInteral = () => {
+  const getImageInterval = () => {
     setInterval(() => {
       const image = firestore.getImage();
       if (image) onReceive(image);
-    }, 10000);
+    }, DISPLAY_TIME);
   };
 
   const onClickFullScreen = () => {
@@ -57,16 +59,11 @@ function App() {
 
   useEffect(() => {
     firestore.subscribeImages();
-    getImageInteral();
+    getImageInterval();
   }, []);
 
   useEffect(() => {
-    if (tmpSlide) {
-      setSlide({
-        old: slide.current,
-        current: tmpSlide,
-      });
-    }
+    tmpSlide && setSlide({ old: slide.current, current: tmpSlide });
   }, [tmpSlide]);
 
   return (
