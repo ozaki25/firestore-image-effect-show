@@ -2,17 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import Image from './components/Image';
 import Container from './components/Container';
+import Links from './components/Links';
 import Firestore from './utils/firestore';
 import { loadImage, ratio, getEffect } from './utils/imageUtils';
 
 const firestore = new Firestore();
 
 const DISPLAY_TIME = 10000; // ms
-
-const LinkButton = styled.a`
-  position: absolute;
-  top: 0;
-`;
 
 const FullScreen = styled.div`
   height: 100%;
@@ -22,6 +18,7 @@ const FullScreen = styled.div`
 function App() {
   const [slide, setSlide] = useState({ old: null, current: null });
   const [tmpSlide, setTmpSlide] = useState(null);
+  const [active, setActive] = useState(null);
   const fullScreenRef = useRef(null);
 
   const onReceive = async ({ url, caption, comment }) => {
@@ -47,10 +44,22 @@ function App() {
   };
 
   const getImageInterval = () => {
-    setInterval(() => {
+    const id = setInterval(() => {
       const image = firestore.getImage();
       if (image) onReceive(image);
     }, DISPLAY_TIME);
+    setActive(id);
+  };
+
+  const onClickStart = () => {
+    if (!active) getImageInterval();
+  };
+
+  const onClickStop = () => {
+    if (active) {
+      clearInterval(active);
+      setActive(null);
+    }
   };
 
   const onClickFullScreen = () => {
@@ -68,9 +77,12 @@ function App() {
 
   return (
     <>
-      <LinkButton href="#" onClick={onClickFullScreen}>
-        Full Screen
-      </LinkButton>
+      <Links
+        onClickFullScreen={onClickFullScreen}
+        onClickStart={onClickStart}
+        onClickStop={onClickStop}
+        active={!!active}
+      />
       <FullScreen ref={fullScreenRef}>
         <Container>
           {slide.old && <Image key={slide.old.key} {...slide.old} type="out" />}
