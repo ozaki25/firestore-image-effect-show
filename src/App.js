@@ -5,10 +5,11 @@ import Container from './components/Container';
 import Links from './components/Links';
 import Firestore from './utils/firestore';
 import { loadImage, ratio, getEffect } from './utils/imageUtils';
+import useSlide from './hooks/useSlide';
 
 const firestore = new Firestore();
 
-const DISPLAY_TIME = 10000; // ms
+const DISPLAY_TIME = 8000; // ms
 
 const FullScreen = styled.div`
   height: 100%;
@@ -16,24 +17,14 @@ const FullScreen = styled.div`
 `;
 
 function App() {
-  const [slide, setSlide] = useState({ old: null, current: null });
-  const [tmpSlide, setTmpSlide] = useState(null);
+  const [slide, setSlide, oldSlide] = useSlide();
   const [active, setActive] = useState(null);
   const fullScreenRef = useRef(null);
 
   const onReceive = async ({ url, caption, comment }) => {
     const { naturalHeight, naturalWidth } = await loadImage({ url });
     const size = ratio({ height: naturalHeight, width: naturalWidth });
-    console.log({
-      url,
-      caption,
-      comment,
-      slide,
-      naturalHeight,
-      naturalWidth,
-      size,
-    });
-    setTmpSlide({
+    setSlide({
       url,
       caption,
       comment,
@@ -71,10 +62,6 @@ function App() {
     getImageInterval();
   }, []);
 
-  useEffect(() => {
-    tmpSlide && setSlide({ old: slide.current, current: tmpSlide });
-  }, [tmpSlide]);
-
   return (
     <>
       <Links
@@ -85,10 +72,8 @@ function App() {
       />
       <FullScreen ref={fullScreenRef}>
         <Container>
-          {slide.old && <Image key={slide.old.key} {...slide.old} type="out" />}
-          {slide.current && (
-            <Image key={slide.current.key} {...slide.current} type="in" />
-          )}
+          {oldSlide && <Image key={oldSlide.key} {...oldSlide} type="out" />}
+          {slide && <Image key={slide.key} {...slide} type="in" />}
         </Container>
       </FullScreen>
     </>
