@@ -3,6 +3,9 @@ import 'firebase/firestore'; //必要なモジュールごとにimport
 
 class Firestore {
   constructor() {
+    this.images = [];
+    this.stock = [];
+    this.savedStock = [];
     this.initFirebase();
     this.setImagesRef();
   }
@@ -19,14 +22,51 @@ class Firestore {
       .firestore()
       .collection('images')
       .orderBy('timestamp', 'desc')
-      .limit(1);
+      .limit(10);
   }
 
-  subscribeImages({ onReceive }) {
-    this.dbImagesRef.onSnapshot(snapshot => {
-      // 1件目だけ返す
-      snapshot.docs.forEach(doc => onReceive(doc.data()));
-    });
+  subscribeImages() {
+    this.dbImagesRef.onSnapshot(this.receivedImages.bind(this));
+  }
+
+  receivedImages(snapshot) {
+    const images = snapshot.docs.map(doc => doc.data());
+    console.log('reveived', { images });
+    this.addImage(images[0]);
+    this.putStock(images);
+    this.putSavedStock(images);
+  }
+
+  addImage(image) {
+    this.images = [...this.images, image];
+  }
+
+  putImages(images) {
+    this.images = images;
+  }
+
+  putStock(images) {
+    this.stock = images;
+  }
+
+  putSavedStock(images) {
+    this.savedStock = images;
+  }
+
+  getImage() {
+    const images = [...this.images];
+    const stock = [...this.stock];
+    console.log('get', { images, stock });
+    if (this.images.length) {
+      this.putImages(images.slice(1));
+      return images[0];
+    } else if (this.stock.length) {
+      this.putStock(stock.slice(0, -1));
+      return stock[stock.length - 1];
+    } else {
+      this.putStock(this.savedStock);
+      return this.getImage();
+    }
   }
 }
 
