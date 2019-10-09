@@ -9,7 +9,7 @@ import useSlide from './hooks/useSlide';
 
 const firestore = new Firestore();
 
-const DISPLAY_TIME = 8000; // ms
+const DISPLAY_TIME = 9000; // ms
 
 const FullScreen = styled.div`
   height: 100%;
