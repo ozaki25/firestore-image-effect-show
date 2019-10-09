@@ -1,5 +1,5 @@
-import firebase from 'firebase/app'; //必須
-import 'firebase/firestore'; //必要なモジュールごとにimport
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const SAVED_NUMBER = 10;
 
