@@ -69,7 +69,7 @@ function App() {
         onClickStop={onClickStop}
         active={!!active}
       />
-      <FullScreen ref={fullScreenRef}>
+      <FullScreen className="punch-full-screen-element" ref={fullScreenRef}>
         <Container>
           {oldSlide && <Image key={oldSlide.key} {...oldSlide} type="out" />}
           {slide && <Image key={slide.key} {...slide} type="in" />}
