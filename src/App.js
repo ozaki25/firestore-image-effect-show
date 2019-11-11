@@ -58,6 +58,10 @@ function App() {
     fullScreenRef.current.requestFullscreen();
   };
 
+  const onClickQRCode = () => {
+    setShowQr(!showQr);
+  };
+
   useEffect(() => {
     firestore.subscribeImages();
     getImageInterval();
@@ -69,6 +73,7 @@ function App() {
         onClickFullScreen={onClickFullScreen}
         onClickStart={onClickStart}
         onClickStop={onClickStop}
+        onClickQRCode={onClickQRCode}
         active={!!active}
       />
       <FullScreen className="punch-full-screen-element" ref={fullScreenRef}>

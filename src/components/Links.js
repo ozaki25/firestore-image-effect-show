@@ -5,7 +5,13 @@ const Link = styled.a`
   padding: 0 0.2em;
 `;
 
-function Links({ onClickFullScreen, onClickStart, onClickStop, active }) {
+function Links({
+  onClickFullScreen,
+  onClickStart,
+  onClickStop,
+  onClickQRCode,
+  active,
+}) {
   return (
     <>
       <Link href="#" onClick={onClickFullScreen}>
@@ -20,6 +26,9 @@ function Links({ onClickFullScreen, onClickStart, onClickStop, active }) {
           Start
         </Link>
       )}
+      <Link href="#" onClick={onClickQRCode}>
+        QRCode
+      </Link>
     </>
   );
 }
