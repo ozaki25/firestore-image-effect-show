@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const url = process.env.REACT_APP_QRCODE;
 
 const Container = styled.div`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 20px;
+  left: 5px;
 `;
 
 function QRCode() {

@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import styled from 'styled-components';
-import Image from './components/Image';
-import Container from './components/Container';
-import Links from './components/Links';
-import QRCode from './components/QRCode';
-import Firestore from './utils/firestore';
-import { loadImage, ratio, getEffect } from './utils/imageUtils';
-import useSlide from './hooks/useSlide';
+import React, { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
+import Image from "./components/Image";
+import Container from "./components/Container";
+import Links from "./components/Links";
+import QRCode from "./components/QRCode";
+import Firestore from "./utils/firestore";
+import { loadImage, ratio, getEffect } from "./utils/imageUtils";
+import useSlide from "./hooks/useSlide";
 
 const firestore = new Firestore();
 
@@ -20,7 +20,7 @@ const FullScreen = styled.div`
 function App() {
   const [slide, setSlide, oldSlide] = useSlide();
   const [active, setActive] = useState(null);
-  const [showQr, setShowQr] = useState(true);
+  const [showQr, setShowQr] = useState(false);
   const fullScreenRef = useRef(null);
 
   const onReceive = async ({ url, caption }) => {
@@ -31,7 +31,7 @@ function App() {
       caption,
       size,
       effect: getEffect(),
-      key: performance.now(),
+      key: performance.now()
     });
   };
 
