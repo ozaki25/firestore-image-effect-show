@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-const SAVED_NUMBER = 100;
+const SAVED_NUMBER = 20;
 
 class Firestore {
   constructor() {
